@@ -77,7 +77,7 @@ for sdk_target in SM.sdk_targets:
       os.path.join(sdk['path'], 'public', 'engine', 'protobuf'),
       os.path.join(sdk['path'], 'public', 'game', 'shared', pb_gamedir_map[sdk['name']], 'protobuf')
     ]
-  
+
   if compiler.like('msvc'):
     compiler.defines += ['_ALLOW_KEYWORD_MACROS']
   if cxx.target.platform == 'linux':
@@ -103,7 +103,7 @@ for sdk_target in SM.sdk_targets:
         platform = 'win32'
       elif compiler.target.arch == 'x86_64':
         platform = 'win64'
-      
+
       if 1900 <= msvc_ver < 2000:
         vs_year = '2015'
       else:

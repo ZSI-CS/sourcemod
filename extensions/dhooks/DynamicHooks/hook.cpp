@@ -306,7 +306,7 @@ void CHook::CreateBridge()
 	Write_CallHandler(jit, HOOKTYPE_PRE);
 
 	jit.cmp(rax, ReturnAction_Supercede);
-	
+
 	// Restore the previously saved registers, so any changes will be applied
 	Write_RestoreRegisters(jit, HOOKTYPE_PRE);
 
@@ -348,7 +348,7 @@ void CHook::Write_ModifyReturnAddress(x64JitWriter& jit)
 {
 	// Store the return address in rax
 	jit.mov(rax, rsp());
-	
+
 	// Save the original return address by using the current esp as the key.
 	// This should be unique until we have returned to the original caller.
 	union
@@ -379,7 +379,7 @@ void CHook::Write_ModifyReturnAddress(x64JitWriter& jit)
 
 	// Free shadow space
 	MSVC_ONLY(jit.add(rsp, 40));
-	
+
 	// Override the return address. This is a redirect to our post-hook code
 	CreatePostCallback();
 	jit.mov(rax, reinterpret_cast<std::uint64_t>(&m_pNewRetAddr));
@@ -462,7 +462,7 @@ void CHook::Write_CallHandler(x64JitWriter& jit, HookType_t type)
 
 	jit.mov(rax, func.address);
 	jit.call(rax);
-	
+
 	// Free shadow space
 	MSVC_ONLY(jit.add(rsp, 40));
 }
@@ -544,7 +544,7 @@ void CHook::Write_RestoreRegisters(x64JitWriter& jit, HookType_t type)
 {
 	// RAX & RSP will be restored last
 	bool restoreRAX = false, restoreRSP = false;
-	
+
 	const auto& vecRegistersToRestore = m_pCallingConvention->GetRegisters();
 	for(size_t i = 0; i < vecRegistersToRestore.size(); i++)
 	{
